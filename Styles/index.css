@@ -4,17 +4,20 @@
     --border-color: #007bff;
     --hover-bg-color: #e9f4ff;
 }
+
 .dark-mode {
     --bg-color: rgb(33,37,41);
     --text-color: #00d4ff;
     --border-color: #00d4ff;
     --hover-bg-color: #333333;
 }
+
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
 }
+
 .upload-area {
     border: 2px dashed var(--border-color);
     border-radius: 10px;
@@ -37,6 +40,7 @@ body {
     font-size: 48px;
     color: var(--text-color);
 }
+
 .dark-mode-toggle {
     position: fixed;
     top: 20px;
@@ -46,5 +50,130 @@ body {
     cursor: pointer;
     transition: color 0.3s;
 }
+
+.table-scroll {
+    overflow-x: auto;
+    max-width: 100%; /* Ensures it takes up available width and allows scrolling */
+}
+
+.csv-table-wrapper {
+    overflow-y: auto;
+    max-height: 400px; /* Make tables scrollable within a fixed height */
+    overflow-y: auto;
+}
+
+.carousel-inner {
+    height: 100%;
+    display: flex;
+    align-items: center; /* Center tables vertically */
+}
+
+.carousel-wrapper {
+    position: relative;
+    width: 100%;
+    height: 500px; /* Set fixed height to match carousel height */
+}
+
+#carousel-container {
+    width: 100%;
+    height: 500px; /* Set a fixed height for the carousel */
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    padding: 0; /* Remove any default padding */
+    
+}
+
+.carousel-control-prev {
+    left: -60px; /* Adjust to position outside the carousel */
+}
+
+.carousel-control-next {
+    right: -60px; /* Adjust to position outside the carousel */
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    font-size: 1.5em; /* Optional: Adjust icon size */
+}
+
+
+
+/* Black Previous Icon */
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 16 16'%3E%3Cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E");
+}
+
+/* Black Next Icon */
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+}
+
+.scrollable-container {
+    overflow-x: auto;
+    max-width: 100%;
+    overflow-y: auto;
+    margin-top: 10px;
+    max-height: 350px; /* Limit height for scrollability */
+    overflow-y: auto; /* Ensure vertical scrolling is contained */
+    scrollbar-width: thin; /* For Firefox: thin scrollbar */
+    scrollbar-color: rgba(0, 0, 0, 0.4) transparent; /* For Firefox: color and transparent track */
+}
+
+.scrollable-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
+
+.scrollable-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.scrollable-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+th, td {
+    cursor: pointer;
+    transition: filter 0.2s ease;  /* Smooth transition effect */
+}
+
+/* Darken or lighten the current color on hover */
+th:hover, td:hover {
+    filter: brightness(0.6);  /* Darken slightly; change value for more effect */
+}
+
+.icon-button {
+    cursor: pointer;
+}
+.icon-button:focus {
+    outline: none;
+}
+
+
+
+
+
+
+
+
 
 
