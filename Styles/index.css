@@ -1,0 +1,50 @@
+:root {
+    --bg-color: #ffffff;
+    --text-color: #007bff;
+    --border-color: #007bff;
+    --hover-bg-color: #e9f4ff;
+}
+.dark-mode {
+    --bg-color: rgb(33,37,41);
+    --text-color: #00d4ff;
+    --border-color: #00d4ff;
+    --hover-bg-color: #333333;
+}
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+}
+.upload-area {
+    border: 2px dashed var(--border-color);
+    border-radius: 10px;
+    padding: 50px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.upload-area:hover {
+    background-color: var(--hover-bg-color);
+}
+.upload-area input[type="file"] {
+    display: none;
+}
+.upload-icon {
+    font-size: 48px;
+    color: var(--text-color);
+}
+.dark-mode-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+
