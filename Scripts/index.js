@@ -1,3 +1,20 @@
+function toggleTheme() {
+    document.body.classList.toggle('dark-mode');
+    const themeIcon = document.getElementById('theme-icon');
+    themeIcon.classList.toggle('bi-moon-fill');
+    themeIcon.classList.toggle('bi-sun-fill');
+
+    // Check if a table exists and toggle its dark mode class based on current theme
+    const table = document.getElementById('csv-table');
+    if (table) {
+        if (document.body.classList.contains('dark-mode')) {
+            table.classList.add('table-dark');
+        } else {
+            table.classList.remove('table-dark');
+        }
+    }
+}
+
 document.getElementById('file-upload').addEventListener('change', (event) => {
     const files = event.target.files;
     if (files.length > 0) {
