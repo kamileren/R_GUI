@@ -162,7 +162,7 @@ th:hover, td:hover {
 }
 
 .icon-button.active {
-    color: yellow; /* Change the color to indicate active state */
+    color: red; /* Change the color to indicate active state */
 }
 
 /* Large Carousel */
@@ -173,3 +173,31 @@ th:hover, td:hover {
 .carousel-inner > .carousel-item {
     height: 100%;
 }
+
+/* Add this to your Custom CSS (../Styles/index.css) */
+.csv-list-item {
+    cursor: pointer;
+}
+
+
+.csv-list-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.csv-list-item.active {
+    background-color: #6c757d; /* Adjust color as needed */
+}
+
+/* Add this CSS to ensure list items are aligned to the left */
+#csv-list {
+    text-align: left;
+}
+
+.csv-list-item {
+    text-align: left;
+}
+
+
+
+
+
