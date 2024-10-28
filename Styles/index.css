@@ -1,3 +1,4 @@
+/* Root Variables */
 :root {
     --bg-color: #ffffff;
     --text-color: #007bff;
@@ -5,6 +6,7 @@
     --hover-bg-color: #e9f4ff;
 }
 
+/* Dark Mode */
 .dark-mode {
     --bg-color: rgb(33,37,41);
     --text-color: #00d4ff;
@@ -12,12 +14,14 @@
     --hover-bg-color: #333333;
 }
 
+/* Body Styles */
 body {
     background-color: var(--bg-color);
     color: var(--text-color);
     transition: background-color 0.3s, color 0.3s;
 }
 
+/* Upload Area */
 .upload-area {
     border: 2px dashed var(--border-color);
     border-radius: 10px;
@@ -41,6 +45,7 @@ body {
     color: var(--text-color);
 }
 
+/* Dark Mode Toggle */
 .dark-mode-toggle {
     position: fixed;
     top: 20px;
@@ -51,6 +56,7 @@ body {
     transition: color 0.3s;
 }
 
+/* Scrollable Tables */
 .table-scroll {
     overflow-x: auto;
     max-width: 100%; /* Ensures it takes up available width and allows scrolling */
@@ -59,9 +65,9 @@ body {
 .csv-table-wrapper {
     overflow-y: auto;
     max-height: 400px; /* Make tables scrollable within a fixed height */
-    overflow-y: auto;
 }
 
+/* Carousel Styling */
 .carousel-inner {
     height: 100%;
     display: flex;
@@ -77,8 +83,6 @@ body {
 #carousel-container {
     width: 100%;
     height: 500px; /* Set a fixed height for the carousel */
-    width: 100%;
-    height: 100%;
     overflow: hidden;
 }
 
@@ -94,13 +98,10 @@ body {
     align-items: center;
     z-index: 10;
     padding: 0; /* Remove any default padding */
-    
 }
-
 .carousel-control-prev {
     left: -60px; /* Adjust to position outside the carousel */
 }
-
 .carousel-control-next {
     right: -60px; /* Adjust to position outside the carousel */
 }
@@ -110,25 +111,21 @@ body {
     font-size: 1.5em; /* Optional: Adjust icon size */
 }
 
-
-
-/* Black Previous Icon */
+/* Black Carousel Icons */
 .carousel-control-prev-icon {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 16 16'%3E%3Cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3E%3C/svg%3E");
 }
-
-/* Black Next Icon */
 .carousel-control-next-icon {
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
 }
 
+/* Scrollable Container */
 .scrollable-container {
     overflow-x: auto;
     max-width: 100%;
     overflow-y: auto;
     margin-top: 10px;
     max-height: 350px; /* Limit height for scrollability */
-    overflow-y: auto; /* Ensure vertical scrolling is contained */
     scrollbar-width: thin; /* For Firefox: thin scrollbar */
     scrollbar-color: rgba(0, 0, 0, 0.4) transparent; /* For Firefox: color and transparent track */
 }
@@ -136,31 +133,27 @@ body {
 .scrollable-container::-webkit-scrollbar {
     width: 8px;
 }
-
 .scrollable-container::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 10px;
 }
-
 .scrollable-container::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.6);
 }
-
 .scrollable-container::-webkit-scrollbar-track {
     background: transparent;
 }
 
-
+/* Table Hover Effects */
 th, td {
     cursor: pointer;
-    transition: filter 0.2s ease;  /* Smooth transition effect */
+    transition: filter 0.2s ease; /* Smooth transition effect */
 }
-
-/* Darken or lighten the current color on hover */
 th:hover, td:hover {
-    filter: brightness(0.6);  /* Darken slightly; change value for more effect */
+    filter: brightness(0.6); /* Darken slightly; change value for more effect */
 }
 
+/* Icon Button */
 .icon-button {
     cursor: pointer;
 }
@@ -168,12 +161,15 @@ th:hover, td:hover {
     outline: none;
 }
 
+.icon-button.active {
+    color: yellow; /* Change the color to indicate active state */
+}
 
-
-
-
-
-
-
-
-
+/* Large Carousel */
+.large-carousel {
+    width: 100%; /* Full width of the container */
+    height: 500px; /* Adjust height as needed */
+}
+.carousel-inner > .carousel-item {
+    height: 100%;
+}

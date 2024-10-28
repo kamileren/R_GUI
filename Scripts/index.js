@@ -1,131 +1,92 @@
-// Variables and Constants
-let selectedKey = null;  // Tracks if "x" or "y" was pressed
-let x;                   // Variable to store "x" index as an object { row: <row>, col: <col> }
-const y = [];            // Array to store "y" indices as objects [{ row: <row>, col: <col> }, ...]
+let selectedKey = null, x, y = [];
 
-// Initialize the carousel on page load
 document.addEventListener('DOMContentLoaded', () => {
-    const carouselElement = document.getElementById('carousel-container');
-    const carousel = new bootstrap.Carousel(carouselElement, {
-        interval: false,  // Disables auto-slide
-        wrap: true        // Allows cycling back to the first item when clicking "Next" on the last item
-    });
+    new bootstrap.Carousel('#carousel-container', { interval: false, wrap: true });
 });
 
-// Functions
 function toggleTheme() {
     document.body.classList.toggle('dark-mode');
-    const themeIcon = document.getElementById('theme-icon');
-    themeIcon.classList.toggle('bi-moon-fill');
-    themeIcon.classList.toggle('bi-sun-fill');
-
-    // Select all tables within the carousel-inner container and update their theme
-    const tables = document.querySelectorAll('#carousel-inner table');
-    tables.forEach(table => {
-        if (document.body.classList.contains('dark-mode')) {
-            table.classList.add('table-dark');
-        } else {
-            table.classList.remove('table-dark');
-        }
+    document.getElementById('theme-icon').classList.toggle('bi-moon-fill');
+    document.getElementById('theme-icon').classList.toggle('bi-sun-fill');
+    document.querySelectorAll('#carousel-inner table').forEach(table => {
+        table.classList.toggle('table-dark', document.body.classList.contains('dark-mode'));
     });
 }
 
 function displayCsvInTable(csvText, fileName) {
     const [header, ...rows] = csvText.trim().split('\n').map(line => line.split(',').map(cell => cell.trim()));
+    const isActive = document.querySelectorAll('.carousel-item').length === 0 ? ' active' : '';
+    const isDarkMode = document.body.classList.contains('dark-mode'); // Check if dark mode is active
+    const tableHTML = `
+        <div class="carousel-item${isActive}">
+            <div class="csv-table-wrapper mb-5">
+                <h5>File: ${fileName}</h5>
+                <div class="scrollable-container">
+                    <table class="table table-striped table-bordered ${isDarkMode ? 'table-dark' : ''}">
+                        <thead>
+                            <tr>${header.map((h, colIndex) => `<th style="cursor:pointer" data-col="${colIndex + 1}">${h}</th>`).join('')}</tr>
+                        </thead>
+                        <tbody>
+                            ${rows.slice(0, 10).map((row, rowIndex) => `
+                                <tr>${row.map((cell, colIndex) => `
+                                    <td style="cursor:pointer" data-row="${rowIndex + 1}" data-col="${colIndex + 1}">${cell}</td>
+                                `).join('')}</tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    `;
+    document.getElementById('carousel-inner').insertAdjacentHTML('beforeend', tableHTML);
 
-    const carouselItem = document.createElement('div');
-    carouselItem.classList.add('carousel-item');
-    if (document.querySelectorAll('.carousel-item').length === 0) {
-        carouselItem.classList.add('active');
-    }
-
-    const tableWrapper = document.createElement('div');
-    tableWrapper.classList.add('csv-table-wrapper', 'mb-5');
-
-    const fileLabel = document.createElement('h5');
-    fileLabel.textContent = `File: ${fileName}`;
-    tableWrapper.appendChild(fileLabel);
-
-    const scrollableContainer = document.createElement('div');
-    scrollableContainer.classList.add('scrollable-container');
-
-    const table = document.createElement('table');
-    table.className = 'table table-striped table-bordered';
-
-    const thead = document.createElement('thead');
-    thead.innerHTML = `<tr>${header.map(h => `<th style="cursor: pointer;">${h}</th>`).join('')}</tr>`;
-    table.appendChild(thead);
-
-    const tbody = document.createElement('tbody');
-    tbody.innerHTML = rows.slice(0, 10).map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('');
-    table.appendChild(tbody);
-
-    scrollableContainer.appendChild(table);
-    tableWrapper.appendChild(scrollableContainer);
-    carouselItem.appendChild(tableWrapper);
-    document.getElementById('carousel-inner').appendChild(carouselItem);
-
-    // Add click event listener to each cell and header to save index based on selected key
-    table.querySelectorAll('thead th').forEach((headerCell, colIndex) => {
-        headerCell.addEventListener('click', () => {
-            if (selectedKey === 'x') {
-                x = { row: 0, col: colIndex + 1 };  // Save as header column
-                console.log(`Saved to x from header:`, x);
-            } else if (selectedKey === 'y') {
-                y.push({ row: 0, col: colIndex + 1 });
-                console.log(`Saved to y array from header:`, y);
-            }
-            selectedKey = null;  // Reset the selected key after saving
-        });
-    });
-
-    table.querySelectorAll('tbody tr').forEach((rowElement, rowIndex) => {
-        rowElement.querySelectorAll('td').forEach((cellElement, colIndex) => {
-            cellElement.style.cursor = 'pointer';
-            cellElement.addEventListener('click', () => {
-                const cellIndex = { row: rowIndex + 1, col: colIndex + 1 };  // One-based index
-
-                if (selectedKey === 'x') {
-                    x = cellIndex;
-                    console.log(`Saved to x:`, x);
-                } else if (selectedKey === 'y') {
-                    y.push(cellIndex);
-                    console.log(`Saved to y array:`, y);
-                }
-                selectedKey = null;  // Reset the selected key after saving
-            });
-        });
+    // Event Delegation for Cell and Header Clicks
+    const lastTable = document.querySelector('#carousel-inner .carousel-item:last-child table');
+    lastTable.addEventListener('click', e => {
+        if (e.target.tagName === 'TD' || e.target.tagName === 'TH') {
+            const cellIndex = {
+                row: e.target.tagName === 'TD' ? +e.target.dataset.row : null,
+                col: +e.target.dataset.col
+            };
+            if (selectedKey === 'x') x = cellIndex;
+            else if (selectedKey === 'y') y.push(cellIndex);
+            console.log(`Saved to ${selectedKey}:`, cellIndex);
+            selectedKey = null;
+            updateIconHighlight();
+        }
     });
 }
 
-// Event Listeners
-document.getElementById('file-upload').addEventListener('change', (event) => {
-    const files = event.target.files;
-    if (files.length > 0) {
-        Array.from(files).forEach(file => {
-            if (file.type === 'text/csv') {
-                const reader = new FileReader();
-                reader.onload = (e) => displayCsvInTable(e.target.result, file.name);
-                reader.readAsText(file);
-            } else {
-                alert("Please upload a valid CSV file.");
-            }
-        });
+// File Upload Logic
+document.getElementById('file-upload').addEventListener('change', event => {
+    for (const file of event.target.files) {
+        if (file.type === 'text/csv') {
+            const reader = new FileReader();
+            reader.onload = e => displayCsvInTable(e.target.result, file.name);
+            reader.readAsText(file);
+        } else {
+            alert("Please upload a valid CSV file.");
+        }
     }
 });
 
-document.addEventListener('keydown', (event) => {
-    if (event.key === 'x') {
-        selectedKey = 'x';
-        console.log("Selected key: x");
-    } else if (event.key === 'y') {
-        selectedKey = 'y';
-        console.log("Selected key: y");
+// Key Selection Logic with Icon Highlighting
+document.addEventListener('keydown', event => {
+    if (['x', 'y'].includes(event.key)) {
+        selectedKey = event.key;
+        console.log(`Selected key: ${selectedKey}`);
+        updateIconHighlight();
+    }else if(event.key === 'Escape')
+    {
+        selectedKey = null;
+        console.log(`Selected key: ${selectedKey}`);
+        updateIconHighlight();
+    
     }
 });
 
-// Function to handle the "Select X" and "Select Y" icon clicks
-function selectKey(key) {
-    selectedKey = key;
-    console.log(`Selected key: ${key}`);
+function updateIconHighlight() {
+    document.getElementById('x-icon').classList.toggle('active', selectedKey === 'x');
+    document.getElementById('y-icon').classList.toggle('active', selectedKey === 'y');
 }
+
