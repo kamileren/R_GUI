@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../Styles/index.css">
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
     <!-- Dark Mode Toggle -->
@@ -29,7 +31,6 @@
                 <i id="y-icon" class="fas fa-y my-3 icon-button" onclick="selectedKey='y'; updateIconHighlight();" title="Select Y"></i>
             </aside>
 
-            <!--Uploaded CSVs-->
             <!-- Uploaded CSVs Sidebar -->
             <aside class="col-2 d-flex flex-column align-items-start bg-dark text-white vh-100">
                 <h5 class="mt-3">Uploaded CSVs</h5>
@@ -48,24 +49,30 @@
                                 <input type="file" id="file-upload" multiple accept=".csv" style="display: none;">
                                 <i class="bi bi-upload upload-icon"></i>
                             </div>
+
+                            <!-- Carousel -->
                             <!-- Carousel -->
                             <div class="carousel-wrapper mt-4">
                                 <div id="carousel-container" class="carousel slide large-carousel">
                                     <div class="carousel-inner" id="carousel-inner"></div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-container" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel-container" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
                                 </div>
-                                <button class="carousel-control-prev" type="button" data-bs-target="#carousel-container" data-bs-slide="prev">
-                                    <span class="carousel-control-prev-icon"></span>
-                                    <span class="visually-hidden">Previous</span>
-                                </button>
-                                <button class="carousel-control-next" type="button" data-bs-target="#carousel-container" data-bs-slide="next">
-                                    <span class="carousel-control-next-icon"></span>
-                                    <span class="visually-hidden">Next</span>
-                                </button>
                             </div>
+
+                            <!-- Plot Container -->
+                            <div id="plot-container" class="plot-container mt-4"></div>
                         </div>
                     </div>
                 </div>
             </main>
+
         </div>
     </div>
 
